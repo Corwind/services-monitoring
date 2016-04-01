@@ -20,16 +20,18 @@ class RequestHandler(http.server.BaseHTTPRequestHandler):
         if not self.config:
             self.config = config(sys.argv[1])
         for srv in self.config['services']:
+            cp = ''
             try:
                 cp = subprocess.check_output([self.config['command'],
                 *(self.config['strformat'].format(status=self.config['arg'],
-                    service=srv).split())], universal_newlines = True)
-                if 'running' in cp:
-                    result[srv] = ['running', cp]
-                else:
-                    result[srv] = ['inactive', cp]
-            except:
-                result[srv] = ['Dead', 'The service does not exist.']
+                    service=srv).split())], universal_newlines =
+                True)
+            except Exception as e:
+                cp = e.output
+            if 'running' in cp:
+                result[srv] = ['running', cp]
+            else:
+                result[srv] = ['inactive', cp]
         return result
 
     def do_GET(self):
