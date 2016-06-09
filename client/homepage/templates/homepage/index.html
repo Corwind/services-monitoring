@@ -9,9 +9,10 @@
             <strong>{{ k }} : {{ v.0 }}</strong>
           </li>
         {% elif v.0 == "inactive" %}
-          <li class="list-group-item list-group-item-warning">
-            <strong>{{ k }} : {{ v.0 }}</strong> <br/>
-            <em>Ouput:</em><pre>{{ v.1 }}</pre></li>
+          <li class="list-group-item list-group-item-warning collapsed">
+            <a role="button" data-toggle="collapse" href="#output_{{ k }}"
+              aria-expended="true" aria-controlled="output_{{ k }}" > {{ k }} : {{ v.0 }}</a> <br/>
+            <pre class="collapse" id="output_{{ k }}">{{ v.1 }}</pre></li>
         {% else %}
           <li class="list-group-item list-group-item-danger">
             <strong>{{ k }} : {{ v.0 }}</strong>
